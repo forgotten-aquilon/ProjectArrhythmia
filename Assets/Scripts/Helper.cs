@@ -10,6 +10,8 @@ public static class Helper
     private const int MainTilesetNumberStart = 73;
     private const string MainTilesetSpritePrefix = "MainTileset_";
     private const float MainTilesetSpriteSize = 16f;
+    private const int MainTilesetColumns = 16;
+    private const int MainTilesetRows = 16;
 
     public static HeartState RotateHeartState(this HeartState state, int shift)
     {
@@ -94,16 +96,19 @@ public static class Helper
 
     public static Rect GetMainTilesetSpriteRect(int index)
     {
-        return index switch
+        var column = index % MainTilesetColumns;
+        var row = index / MainTilesetColumns;
+
+        if (index < 0 || row >= MainTilesetRows)
         {
-            >= 0 and <= 11 => new Rect(index * MainTilesetSpriteSize, 240f, MainTilesetSpriteSize, MainTilesetSpriteSize),
-            >= 12 and <= 26 => new Rect((index - 11) * MainTilesetSpriteSize, 224f, MainTilesetSpriteSize, MainTilesetSpriteSize),
-            >= 27 and <= 42 => new Rect((index - 27) * MainTilesetSpriteSize, 208f, MainTilesetSpriteSize, MainTilesetSpriteSize),
-            >= 43 and <= 58 => new Rect((index - 43) * MainTilesetSpriteSize, 192f, MainTilesetSpriteSize, MainTilesetSpriteSize),
-            >= 59 and <= 74 => new Rect((index - 59) * MainTilesetSpriteSize, 176f, MainTilesetSpriteSize, MainTilesetSpriteSize),
-            >= 75 and <= 77 => new Rect((index - 75) * MainTilesetSpriteSize, 160f, MainTilesetSpriteSize, MainTilesetSpriteSize),
-            _ => throw new ArgumentOutOfRangeException(nameof(index), index, "Unsupported main tileset index.")
-        };
+            throw new ArgumentOutOfRangeException(nameof(index), index, "Unsupported main tileset index.");
+        }
+
+        return new Rect(
+            column * MainTilesetSpriteSize,
+            (MainTilesetRows - 1 - row) * MainTilesetSpriteSize,
+            MainTilesetSpriteSize,
+            MainTilesetSpriteSize);
     }
 
 }

@@ -29,11 +29,12 @@ public class TargetBehaviour : MonoBehaviour
 
     public void Awake()
     {
-        Cursor.visible = false;
     }
 
     public void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
         _cursorRenderer = _inGameCursor.GetComponent<SpriteRenderer>();
         _circleRenderer = _inGameCircle.GetComponent<SpriteRenderer>();
         _cursorRenderer.color = _colorPalette.Blue;
