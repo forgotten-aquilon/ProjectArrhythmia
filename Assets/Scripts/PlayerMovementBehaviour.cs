@@ -150,7 +150,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
         _collider = GetComponent<SphereCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _playerBehaviour = GetComponent<PlayerBehaviour>();
-        //SpawnAtSpawnPointCoordinates();
+        SpawnAtSpawnPointCoordinates();
         _rigidbody.useGravity = false;
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;

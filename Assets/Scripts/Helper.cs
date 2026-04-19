@@ -70,6 +70,8 @@ public static class Helper
             "Cross" => 17,
             "HL" => 18,
             "VL" => 19,
+            "Grass1" => 83,
+            "Grass2" => 84,
             "Heart" => 88,
             _ => 0
         };
