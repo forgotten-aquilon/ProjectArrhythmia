@@ -36,6 +36,7 @@ public class TargetBehaviour : MonoBehaviour
     {
         _cursorRenderer = _inGameCursor.GetComponent<SpriteRenderer>();
         _circleRenderer = _inGameCircle.GetComponent<SpriteRenderer>();
+        _cursorRenderer.color = _colorPalette.Blue;
         ChangeCursor(CursorState.Synced);
         GlobalHeartBehaviour.Instance.StateChanged += InstanceOnStateChanged;
     }

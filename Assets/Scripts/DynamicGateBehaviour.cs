@@ -6,6 +6,8 @@ public class DynamicGateBehaviour : ColoredBehaviour
 {
     public List<HPColoredBehaviour> Keys = new List<HPColoredBehaviour>();
 
+    private Action _action;
+
     protected override void Awake()
     {
         base.Awake();
@@ -16,15 +18,20 @@ public class DynamicGateBehaviour : ColoredBehaviour
         }
     }
 
-    protected override void OnDestroy()
+    public void SetAction(Action action)
     {
-        ClearKeyDestroyActions();
-        base.OnDestroy();
+        _action = action;
     }
 
-    protected override void OnTileAmountDepleted()
+    protected override void OnDestroy()
     {
-        ClearKeyDestroyActions();
+        if (Application.isPlaying && !ApplicationLifecycle.IsTearingDown)
+        {
+            _action?.Invoke();
+        }
+
+        _action = null;
+        base.OnDestroy();
     }
 
     protected override Color GetTileColor(int tileIndex)
@@ -35,16 +42,5 @@ public class DynamicGateBehaviour : ColoredBehaviour
     private void TakeDamage()
     {
         SetTileAmount(TileAmount - 1);
-    }
-
-    private void ClearKeyDestroyActions()
-    {
-        foreach (var key in Keys)
-        {
-            if (key != null)
-            {
-                key.ClearDestroyAction();
-            }
-        }
     }
 }

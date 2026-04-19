@@ -80,9 +80,13 @@ public abstract class StackedTileBehaviour : MonoBehaviour
 
     public void SetTileAmount(int tileAmount)
     {
+        if (ApplicationLifecycle.IsTearingDown)
+        {
+            return;
+        }
+
         if (tileAmount <= 0)
         {
-            OnTileAmountDepleted();
             Destroy(gameObject);
             return;
         }
@@ -107,10 +111,6 @@ public abstract class StackedTileBehaviour : MonoBehaviour
     }
 
     protected abstract Color GetTileColor(int tileIndex);
-
-    protected virtual void OnTileAmountDepleted()
-    {
-    }
 
     private void RebuildTiles()
     {
@@ -281,6 +281,46 @@ public abstract class StackedTileBehaviour : MonoBehaviour
         }
 
         return null;
+    }
+#endif
+}
+
+public static class ApplicationLifecycle
+{
+    public static bool IsTearingDown { get; private set; }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void Reset()
+    {
+        IsTearingDown = false;
+        Application.quitting -= OnQuitting;
+        Application.quitting += OnQuitting;
+    }
+
+    private static void OnQuitting()
+    {
+        IsTearingDown = true;
+    }
+
+#if UNITY_EDITOR
+    [InitializeOnLoadMethod]
+    private static void RegisterEditorCallbacks()
+    {
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+    }
+
+    private static void OnPlayModeStateChanged(PlayModeStateChange state)
+    {
+        switch (state)
+        {
+            case PlayModeStateChange.EnteredPlayMode:
+                IsTearingDown = false;
+                break;
+            case PlayModeStateChange.ExitingPlayMode:
+                IsTearingDown = true;
+                break;
+        }
     }
 #endif
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -38,6 +39,11 @@ public class PursuerBehaviour : MonoBehaviour
     private void Awake()
     {
         ConfigureRigidbody();
+    }
+
+    public void OnDestroy()
+    {
+        
     }
 
     private void FixedUpdate()

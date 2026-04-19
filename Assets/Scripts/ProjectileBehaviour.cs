@@ -18,6 +18,9 @@ public class ProjectileBehaviour : MonoBehaviour
     [SerializeField]
     private float _lifetimeInSeconds = 4;
 
+    [SerializeField]
+    private GameObject _collisionParticlePrefab;
+
     private TimeSpan _timer = TimeSpan.FromSeconds(0);
 
     private Rigidbody _rigidbody;
@@ -93,12 +96,25 @@ public class ProjectileBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        var impactPosition = collision.contactCount > 0
+            ? collision.GetContact(0).point
+            : transform.position;
+
+        SpawnCollisionParticles(impactPosition);
         Damage(collision.gameObject);
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        var impactPosition = other.ClosestPoint(transform.position);
+
+        if ((impactPosition - transform.position).sqrMagnitude <= Mathf.Epsilon)
+        {
+            impactPosition = transform.position;
+        }
+
+        SpawnCollisionParticles(impactPosition);
         Damage(other.gameObject);
         Destroy(gameObject);
     }
@@ -108,6 +124,25 @@ public class ProjectileBehaviour : MonoBehaviour
         if (obj.GetComponentInParent<HPColoredBehaviour>() is {} behaviour && behaviour.GetShiftedState() == State)
         {
             behaviour.TakeDamage();
+        }
+    }
+
+    private void SpawnCollisionParticles(Vector3 position)
+    {
+        if (_collisionParticlePrefab == null)
+        {
+            return;
+        }
+
+        var particlesObject = Instantiate(_collisionParticlePrefab, position, _collisionParticlePrefab.transform.rotation);
+        var color = GetCurrentColor();
+
+        foreach (var system in particlesObject.GetComponentsInChildren<ParticleSystem>(true))
+        {
+            var main = system.main;
+            main.startColor = color;
+            system.Clear(false);
+            system.Play(false);
         }
     }
 
@@ -155,6 +190,26 @@ public class ProjectileBehaviour : MonoBehaviour
                 spriteRenderer.color = color;
             }
         }
+    }
+
+    private Color GetCurrentColor()
+    {
+        _spriteRenderers ??= GetComponentsInChildren<SpriteRenderer>(true);
+
+        if (_spriteRenderers != null)
+        {
+            foreach (var spriteRenderer in _spriteRenderers)
+            {
+                if (spriteRenderer != null)
+                {
+                    return spriteRenderer.color;
+                }
+            }
+        }
+
+        _colorPalette ??= LoadColorPalette();
+
+        return _colorPalette != null ? _colorPalette.GetColor(State) : Color.white;
     }
 
     private static ColorSO LoadColorPalette()

@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 807603768, guid: 53c9c0021d42cb34280a7adbd0051121, type: 3}
+  m_Sprite: {fileID: 877864329, guid: 53c9c0021d42cb34280a7adbd0051121, type: 3}
   m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerBehaviour
   _tileAmount: 5
-  _tileValue: A
+  _tileValue: Box
   _distance: 0
   _tileRotation: {x: 90, y: 0, z: 0}
   _colorPalette: {fileID: 11400000, guid: 65d6d57c60e138743a4ba039a9e3465d, type: 2}
@@ -139,3 +139,4 @@ MonoBehaviour:
   _delayInSecond: 1
   _spawnOffsetX: 1
   _hp: 2
+  _limit: 10

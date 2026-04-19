@@ -48,7 +48,6 @@ public static class Helper
 
     public static int GetTileSetByString(string value)
     {
-        //TODO: phase
         return value switch
         {
             "Hash" => 0,

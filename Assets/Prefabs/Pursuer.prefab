@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 494173536873290019}
   - component: {fileID: 4662921195620462844}
   - component: {fileID: 1430310429314849432}
+  - component: {fileID: 8653007745854534217}
   m_Layer: 0
   m_Name: Pursuer
   m_TagString: Untagged
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 807603768, guid: 53c9c0021d42cb34280a7adbd0051121, type: 3}
+  m_Sprite: {fileID: 2140507042, guid: 53c9c0021d42cb34280a7adbd0051121, type: 3}
   m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HPColoredBehaviour
   _tileAmount: 5
-  _tileValue: A
+  _tileValue: Warden
   _distance: 1
   _tileRotation: {x: 90, y: 0, z: 0}
   _colorPalette: {fileID: 11400000, guid: 65d6d57c60e138743a4ba039a9e3465d, type: 2}
@@ -179,3 +180,15 @@ MonoBehaviour:
   _speed: 5
   _collisionPushbackSpeed: 1
   _collisionPushbackDamping: 12
+--- !u!114 &8653007745854534217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332281024635419626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce85a7de4395a674fac63cb67c51b6c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy

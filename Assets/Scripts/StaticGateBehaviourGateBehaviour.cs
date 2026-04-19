@@ -27,16 +27,6 @@ public class StaticGateBehaviour : StaticTileBehaviour
         }
     }
 
-    protected override void OnDestroy()
-    {
-        ClearKeyDestroyActions();
-        base.OnDestroy();
-    }
-
-    protected override void OnTileAmountDepleted()
-    {
-        ClearKeyDestroyActions();
-    }
 
     public void TakeDamage(HeartState state)
     {
@@ -57,16 +47,5 @@ public class StaticGateBehaviour : StaticTileBehaviour
         }
 
         return _colorPalette.Neutral;
-    }
-
-    private void ClearKeyDestroyActions()
-    {
-        foreach (var key in Keys)
-        {
-            if (key != null)
-            {
-                key.ClearDestroyAction();
-            }
-        }
     }
 }

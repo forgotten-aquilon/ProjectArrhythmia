@@ -10,6 +10,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
     [SerializeField]
     private Camera targetCamera;
+
     [SerializeField]
     private Collider planeCollider;
 
@@ -18,6 +19,9 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
     [SerializeField]
     private GameObject _projectilePrefab;
+
+    [SerializeField]
+    private Transform _spawnPoint;
 
     private PlayerBehaviour _playerBehaviour;
     private Rigidbody _rigidbody;
@@ -143,10 +147,21 @@ public class PlayerMovementBehaviour : MonoBehaviour
         _collider = GetComponent<SphereCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _playerBehaviour = GetComponent<PlayerBehaviour>();
+        //SpawnAtSpawnPointCoordinates();
         _rigidbody.useGravity = false;
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+    }
+
+    private void SpawnAtSpawnPointCoordinates()
+    {
+        if (_spawnPoint == null)
+        {
+            return;
+        }
+
+        _rigidbody.position = _spawnPoint.position;
     }
 
     private void IgnoreProjectileCollision(GameObject projectile)
@@ -191,6 +206,12 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.GetComponent<Enemy>() is {})
+        {
+            SpawnAtSpawnPointCoordinates();
+            return;
+        }
+
         if (TryIgnoreKeyCollision(collision))
         {
             return;
@@ -201,6 +222,12 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        if (collision.gameObject.GetComponent<Enemy>() is { })
+        {
+            SpawnAtSpawnPointCoordinates();
+            return;
+        }
+
         if (TryIgnoreKeyCollision(collision))
         {
             return;

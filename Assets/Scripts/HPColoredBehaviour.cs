@@ -9,6 +9,12 @@ public class HPColoredBehaviour : ColoredBehaviour, ISelfDestroyer
     {
         base.OnDestroy();
 
+        if (!Application.isPlaying || ApplicationLifecycle.IsTearingDown)
+        {
+            _action = null;
+            return;
+        }
+
         var action = _action;
         _action = null;
         action?.Invoke();
@@ -22,10 +28,5 @@ public class HPColoredBehaviour : ColoredBehaviour, ISelfDestroyer
     public void SetDestroyAction(Action action)
     {
         _action = action;
-    }
-
-    public void ClearDestroyAction()
-    {
-        _action = null;
     }
 }

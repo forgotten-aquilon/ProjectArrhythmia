@@ -18,6 +18,10 @@ public class SpawnerBehaviour : HPColoredBehaviour
     [SerializeField]
     private int _hp = 2;
 
+    [SerializeField]
+    private int _limit = 10;
+
+    private int _spawned = 0;
     private TimeSpan _timer;
 
 
@@ -30,8 +34,13 @@ public class SpawnerBehaviour : HPColoredBehaviour
         }
         else
         {
-            Spawn();
+            if (_spawned < _limit)
+            {
+                Spawn();
+            }
+
             _timer = TimeSpan.Zero;
+            _spawned++;
         }
     }
 
