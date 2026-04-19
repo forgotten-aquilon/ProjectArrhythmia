@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5107104991748082544
+--- !u!1 &4682082419806157478
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 428815738387955114}
-  - component: {fileID: 2789085200487940827}
-  - component: {fileID: 8152083527143653349}
-  - component: {fileID: 4472267287987685028}
+  - component: {fileID: 3714698717937005193}
+  - component: {fileID: 7645124010643298471}
+  - component: {fileID: 8067828775946860363}
+  - component: {fileID: 7437527057293163026}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: TriDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &428815738387955114
+--- !u!4 &3714698717937005193
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5107104991748082544}
+  m_GameObject: {fileID: 4682082419806157478}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 4, y: 0, z: -3}
+  m_LocalPosition: {x: 94.76, y: 1, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2789085200487940827
+--- !u!212 &7645124010643298471
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5107104991748082544}
+  m_GameObject: {fileID: 4682082419806157478}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 877864329, guid: 53c9c0021d42cb34280a7adbd0051121, type: 3}
+  m_Sprite: {fileID: -1629401469, guid: 53c9c0021d42cb34280a7adbd0051121, type: 3}
   m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -93,13 +93,13 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!65 &8152083527143653349
+--- !u!65 &8067828775946860363
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5107104991748082544}
+  m_GameObject: {fileID: 4682082419806157478}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -114,32 +114,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4472267287987685028
+--- !u!114 &7437527057293163026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5107104991748082544}
+  m_GameObject: {fileID: 4682082419806157478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8177ae3d9d98c64d86a081bfef66493, type: 3}
+  m_Script: {fileID: 11500000, guid: 0beb4f31dbfaf774390faa2a31615131, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpawnerBehaviour
-  _tileAmount: 5
-  _tileValue: Box
-  _distance: 0
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicGateBehaviour
+  _tileAmount: 3
+  _tileValue: Hourglass
+  _distance: 1
   _tileRotation: {x: 90, y: 0, z: 0}
   _colorPalette: {fileID: 11400000, guid: 65d6d57c60e138743a4ba039a9e3465d, type: 2}
   _isStatic: 0
   _shift: 0
   State: 0
-  _target: {fileID: 0}
-  _prefab: {fileID: 494173536873290019, guid: 6908b4dd5efee1249a588b4b633c8479, type: 3}
-  _parent: {fileID: 0}
-  _delayInSecond: 1
-  _spawnOffsetX: 1
-  _spawnOffsetZ: 0
-  _hp: 2
-  _limit: 10
-  _isActive: 0
+  Keys:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

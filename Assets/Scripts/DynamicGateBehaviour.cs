@@ -8,6 +8,8 @@ public class DynamicGateBehaviour : ColoredBehaviour
 
     private Action _action;
 
+    private bool _isHostile = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -42,5 +44,21 @@ public class DynamicGateBehaviour : ColoredBehaviour
     private void TakeDamage()
     {
         SetTileAmount(TileAmount - 1);
+    }
+
+    public void MakeHostile()
+    {
+        if (!_isHostile)
+        {
+            foreach (var key in Keys)
+            {
+                if (key.GetComponent<SpawnerBehaviour>() is {} spawner)
+                {
+                    spawner.IsActive = true;
+                }
+            }
+        }
+
+        _isHostile = true;
     }
 }

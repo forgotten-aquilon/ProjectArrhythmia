@@ -121,6 +121,11 @@ public class ProjectileBehaviour : MonoBehaviour
 
     private void Damage(GameObject obj)
     {
+        if (obj.GetComponentInParent<DynamicGateBehaviour>() is {} gate)
+        {
+            gate.MakeHostile();
+        }
+
         if (obj.GetComponentInParent<HPColoredBehaviour>() is {} behaviour && behaviour.GetShiftedState() == State)
         {
             behaviour.TakeDamage();

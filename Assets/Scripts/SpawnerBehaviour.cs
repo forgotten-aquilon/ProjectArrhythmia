@@ -10,10 +10,16 @@ public class SpawnerBehaviour : HPColoredBehaviour
     private HPColoredBehaviour _prefab;
 
     [SerializeField]
+    private DynamicGateBehaviour _parent;
+
+    [SerializeField]
     private int _delayInSecond = 1;
 
     [SerializeField]
     private float _spawnOffsetX = 1f;
+
+    [SerializeField]
+    private float _spawnOffsetZ = 0f;
 
     [SerializeField]
     private int _hp = 2;
@@ -24,24 +30,49 @@ public class SpawnerBehaviour : HPColoredBehaviour
     private int _spawned = 0;
     private TimeSpan _timer;
 
+    [SerializeField]
+    private bool _isActive = false;
+
+    public bool IsActive
+    {
+        get => _isActive;
+        set
+        {
+            if (!_isActive)
+            {
+                Spawn();
+            }
+            
+            _isActive = value;
+        }
+    }
 
 
     public void FixedUpdate()
     {
+        if (!IsActive)
+        {
+            return;
+        }
+
+
         if (_timer < TimeSpan.FromSeconds(_delayInSecond))
         {
+            
             _timer += TimeSpan.FromSeconds(Time.fixedDeltaTime);
         }
         else
         {
-            if (_spawned < _limit)
-            {
-                Spawn();
-            }
-
+            Spawn();
             _timer = TimeSpan.Zero;
-            _spawned++;
         }
+    }
+
+    public override void TakeDamage()
+    {
+        IsActive = true;
+        _parent?.MakeHostile();
+        base.TakeDamage();
     }
 
     private void Spawn()
@@ -51,8 +82,16 @@ public class SpawnerBehaviour : HPColoredBehaviour
             return;
         }
 
+        if (_spawned >= _limit)
+        {
+            return;
+        }
+
+        Debug.Log("Spwnd");
+
         var spawnPosition = transform.position;
         spawnPosition.x += _spawnOffsetX;
+        spawnPosition.z += _spawnOffsetZ;
 
         var spawnedObject = Instantiate(_prefab, spawnPosition, transform.rotation);
         spawnedObject.State = GetShiftedState();
@@ -62,5 +101,7 @@ public class SpawnerBehaviour : HPColoredBehaviour
         {
             pursuer.Target = _target;
         }
+
+        _spawned++;
     }
 }

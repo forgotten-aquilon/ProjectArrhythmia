@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PursuerBehaviour
   _target: {fileID: 0}
-  _speed: 5
+  _speed: 3
   _collisionPushbackSpeed: 1
   _collisionPushbackDamping: 12
 --- !u!114 &8653007745854534217

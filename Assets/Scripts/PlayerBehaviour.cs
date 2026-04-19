@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class PlayerBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    public List<HeartState> Keys = new List<HeartState>();
+    [SerializeField] 
+    private AudioSource _audio;
 
     void Start()
     {
@@ -15,5 +16,10 @@ public class PlayerBehaviour : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ShootSound()
+    {
+        _audio.Play();
     }
 }

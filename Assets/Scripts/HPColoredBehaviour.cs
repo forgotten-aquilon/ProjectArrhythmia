@@ -20,7 +20,7 @@ public class HPColoredBehaviour : ColoredBehaviour, ISelfDestroyer
         action?.Invoke();
     }
 
-    public void TakeDamage()
+    public virtual void TakeDamage()
     {
         SetTileAmount(TileAmount - 1);
     }

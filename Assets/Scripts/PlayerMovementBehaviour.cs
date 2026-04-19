@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovementBehaviour : MonoBehaviour
@@ -91,6 +92,8 @@ public class PlayerMovementBehaviour : MonoBehaviour
         }
 
         IgnoreProjectileCollision(projectileObject);
+
+        _playerBehaviour.ShootSound();
     }
 
     public void OnCapture(InputValue value)
@@ -222,6 +225,12 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        if (collision.gameObject.GetComponent<FinalGates>() is { })
+        {
+            SceneManager.LoadScene(1);
+            return;
+        }
+
         if (collision.gameObject.GetComponent<Enemy>() is { })
         {
             SpawnAtSpawnPointCoordinates();
@@ -251,8 +260,6 @@ public class PlayerMovementBehaviour : MonoBehaviour
         }
 
         _collisionNormals.Remove(collision.collider);
-
-        _playerBehaviour.Keys.Add(keyBehaviour.GetHeartState());
 
         var keyColliders = keyBehaviour.GetComponentsInChildren<Collider>();
 

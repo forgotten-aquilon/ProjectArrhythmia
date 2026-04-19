@@ -53,10 +53,23 @@ public abstract class StackedTileBehaviour : MonoBehaviour
             return;
         }
 
+        EditorApplication.delayCall -= DelayedValidate;
+        EditorApplication.delayCall += DelayedValidate;
+    }
+
+    private void DelayedValidate()
+    {
+        if (this == null || Application.isPlaying)
+        {
+            return;
+        }
+
         ClearGeneratedTiles();
         ConfigureRootTile();
         _tileRenderers.Clear();
         RefreshColors();
+
+        EditorUtility.SetDirty(this);
     }
 #endif
 
@@ -171,7 +184,7 @@ public abstract class StackedTileBehaviour : MonoBehaviour
         {
             var child = transform.GetChild(i);
 
-            if (!IsGeneratedTile(child.name))
+            if (!IsGeneratedTile(child))
             {
                 continue;
             }
@@ -187,8 +200,10 @@ public abstract class StackedTileBehaviour : MonoBehaviour
         }
     }
 
-    private static bool IsGeneratedTile(string childName)
+    private static bool IsGeneratedTile(Transform child)
     {
+        var childName = child.name;
+
         if (childName.StartsWith(GeneratedTileNamePrefix, StringComparison.Ordinal))
         {
             return true;
@@ -202,7 +217,32 @@ public abstract class StackedTileBehaviour : MonoBehaviour
             }
         }
 
-        return false;
+        return IsLegacyNumberedTile(child);
+    }
+
+    private static bool IsLegacyNumberedTile(Transform child)
+    {
+        const string numberedTilePrefix = "Tile ";
+        var childName = child.name;
+
+        if (!childName.StartsWith(numberedTilePrefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var suffix = childName.Substring(numberedTilePrefix.Length);
+        if (!int.TryParse(suffix, out _))
+        {
+            return false;
+        }
+
+        if (child.childCount > 0)
+        {
+            return false;
+        }
+
+        var components = child.GetComponents<Component>();
+        return components.Length == 2 && child.GetComponent<SpriteRenderer>() != null;
     }
 
     private Sprite ResolveConfiguredSprite()
